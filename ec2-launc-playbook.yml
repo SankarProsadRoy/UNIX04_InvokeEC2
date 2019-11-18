@@ -1,0 +1,41 @@
+---
+-
+  hosts: localhost
+  become: true
+  gather_facts: false
+  vars:
+    region: us-east-2
+    instance_type: t2.micro
+    ami: ami-05220ffa0e7fce3d1
+    hosts_file: /etc/ansible/hosts
+
+tasks: 
+  - name: "Create security group\nec2_group:\naws_access_key: <access key>\naws_secret_key: <Secret key>\nname: \"accenture_dev_ops\"\ndescription: \"accenture_dev_ops Security Group\"\nregion: \"{{ region }}\"\nrules:"
+  - proto: "tcp\nfrom_port: 22\nto_port: 22\ncidr_ip: 0.0.0.0/0"
+
+  - name: "Create an EC2 key\nec2_key:\naws_access_key: <access key>\naws_secret_key: <Secret key>\nname: \"accenture_dev_ops\"\nregion: \"{{ region }}\"\nregister: ec2_key"
+  - name: "Save private key (PEM file)\ncopy: content=\"{{ec2_key.key.private_key}}\" dest=/home/ansible/accenture_dev_ops.pem mode=0600\nwhen: ec2_key.changed"
+  - name: "Create an EC2 key\nec2_key:\naws_access_key: <access key>\naws_secret_key: <Secret key>\nname: \"accenture_dev_ops\"\nregion: \"{{ region }}\"\nregister: ec2_key"
+  - name: "Save private key (PEM file)\ncopy: content=\"{{ec2_key.key.private_key}}\" dest=/home/ansible/accenture_dev_ops.pem mode=0600\nwhen: ec2_key.changed"
+  - name: 'Create an ec2 instance'
+    ec2:
+    aws_access_key: '<access key>'
+    aws_secret_key: '<secret key>'
+    key_name: accenture_dev_ops
+    group: accenture_dev_ops
+    instance_type: '{{ instance_type}}'
+    image: '{{ ami }}'
+    wait: true
+    region: '{{ region }}'
+    count: 1
+    count_tag: null
+    Name: Demo
+    instance_tags: null
+    register: ec2
+-
+  name: "Save IP to inventory file\nlineinfile:\ndest: \"{{hosts_file}}\"\ninsertafter: '\\[webservers\\]'\nline: \"{{item.private_ip}}\"\nwith_items: \"{{ec2.instances}}\""
+
+
+
+
+
