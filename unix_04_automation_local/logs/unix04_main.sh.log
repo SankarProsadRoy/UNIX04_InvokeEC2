@@ -1,0 +1,27 @@
+\nCurrent date and time is: 21112019-12:07\nIncident number: INC123456\nServer Name: ip-172-31-31-110.ap-south-1.compute.internal\nFSNAME: /oradata\nTHRESHOLD VALUE: 75\nCURRENT_FS_UTIL:
+Filesystem                1K-blocks    Used Available Use% Mounted on
+/dev/mapper/ora_vg-ora_lv   3997376 3130248    641032  84% /oradata
+
+Extending the FS /oradata
+'unknown': unknown terminal type.
+
+Detailed output of FS /oradata
+--------------------------------------------
+HOSTNAME      =      ip-172-31-31-110.ap-south-1.compute.internal
+OS TYPE       =      Linux
+INSTANCE      =      PHY 
+FS NAME       =      /oradata
+VG NAME       =      ora_vg
+LV NAME       =      /dev/mapper/ora_vg-ora_lv
+LV SIZE       =  4.00GiB
+REQUIRED SAPCE = 1132 MB
+FREE SPACE IN VG = 16384.00 MB
+--------------------------------------------
+  Size of logical volume ora_vg/ora_lv changed from 4.00 GiB (1024 extents) to <5.11 GiB (1307 extents).
+  Logical volume ora_vg/ora_lv successfully resized.
+resize2fs 1.42.9 (28-Dec-2013)
+Filesystem at /dev/mapper/ora_vg-ora_lv is mounted on /oradata; on-line resizing required
+old_desc_blocks = 1, new_desc_blocks = 1
+The filesystem on /dev/mapper/ora_vg-ora_lv is now 1338368 blocks long.
+
+FS /oradata is extended by 1132 MB
